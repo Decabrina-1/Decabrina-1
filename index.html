@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Простая задача</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        #taskInput {
+            width: 70%;
+            padding: 8px;
+            margin-right: 10px;
+        }
+        #addButton {
+            padding: 8px 16px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            padding: 10px;
+            margin: 5px 0;
+            background: #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .deleteBtn {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Список задач</h1>
+    <input type="text" id="taskInput" placeholder="Введите новую задачу">
+    <button id="addButton">Добавить</button>
+    <ul id="taskList"></ul>
+
+    <script>
+        // Получаем элементы
+        const taskInput = document.getElementById('taskInput');
+        const addButton = document.getElementById('addButton');
+        const taskList = document.getElementById('taskList');
+
+        // Добавляем задачу
+        addButton.addEventListener('click', () => {
+            const taskText = taskInput.value.trim();
+            if (taskText === '') return;
+
+            // Создаем элемент списка
+            const li = document.createElement('li');
+            li.textContent = taskText;
+
+            // Создаем кнопку удаления
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'deleteBtn';
+            deleteBtn.textContent = 'Удалить';
+
+            // Добавляем обработчик удаления
+            deleteBtn.addEventListener('click', () => {
+                taskList.removeChild(li);
+            });
+
+            // Добавляем элементы в список
+            li.appendChild(deleteBtn);
+            taskList.appendChild(li);
+
+            // Очищаем поле ввода
+            taskInput.value = '';
+        });
+
+        // Обработчик удаления по клику на кнопку
+        taskList.addEventListener('click', (e) => {
+            if (e.target.classList.contains('deleteBtn')) {
+                const li = e.target.parentElement;
+                taskList.removeChild(li);
+            }
+        });
+    </script>
+</body>
+</html>
